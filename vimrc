@@ -25,16 +25,18 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 set nocompatible               " be iMproved
 filetype off                  " required!
 
-set rtp+=~/.vim/bundle/vundle/
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
-" let Vundle manage Vundle
 " required!
 Bundle 'gmarik/vundle'
 
 " My Bundles here:
 "
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'L9'
+Bundle 'FuzzyFinder'
 Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-haml'
@@ -53,7 +55,6 @@ filetype plugin indent on     " required!
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
-
 
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -94,24 +95,28 @@ nnoremap <S-Up> :m .-2<CR>
 
 function! MarkWindowSwap()
     let g:markedWinNum = winnr()
-endfunction
+    endfunction
 
 " window swap
 function! DoWindowSwap()
-    "Mark destination
-    let curNum = winnr()
-    let curBuf = bufnr( "%" )
-    exe g:markedWinNum . "wincmd w"
-    "Switch to source and shuffle dest->source
-    let markedBuf = bufnr( "%" )
-    "Hide and open so that we aren't prompted and keep history
-    exe 'hide buf' curBuf
-    "Switch to dest and shuffle source->dest
-    exe curNum . "wincmd w"
-    "Hide and open so that we aren't prompted and keep history
-    exe 'hide buf' markedBuf
+  "mark destination
+  let curnum = winnr()
+  let curbuf = bufnr( "%" )
+  exe g:markedwinnum . "wincmd w"
+  "switch to source and shuffle dest->source
+  let markedbuf = bufnr( "%" )
+  exe 'hide buf' curbuf
+  source->dest
+  exe curnum . "wincmd w"
+  exe 'hide buf' markedbuf
 endfunction
 
-nmap <silent> <leader>mw :call MarkWindowSwap()<CR>
-map <silent> <leader>pw :call DoWindowSwap()<CR>
-
+nmap <silent> <leader>mw :call markwindowswap()<cr>
+map <silent> <leader>pw :call dowindowswap()<cr>
+map <C-x> :FufCoverageFile<CR>
+let g:fuf_coveragefile_exclude = '\v\~$|\.(o|mp3|exe|dll|png|bak|orig|swp|swn|png|jpg|gif|swm|DS_Store)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|public/00_common_assets/*|system/qor_jobs/*'
+let g:fuf_coveragefile_globPatterns = ['*', 'lib/**/*', 'public/javascripts/**/*', 'public/stylesheets/**/*', 'public/js/**/*', 'public/css/**/*', '*.m']
+let g:fuf_coveragefile_globPatterns = g:fuf_coveragefile_globPatterns + ['*', 'app/**/*', 'config/**/*', 'db/**/*', 'test/**/*', 'addon/**/*', 'lib/**/*', 'products/**/*', 'routes/**/*', 'scenarios/**/*', 'home/**/*', 'sessions/**/*', 'templates/**/*', 'trades/**/*', 'home/**/*', 'admin/**/*', 'tests/**/*', 'handlers/**/*', 'categories/**/*']
+let g:fuf_coveragefile_globPatterns = g:fuf_coveragefile_globPatterns + ["extlib/**/*", "addon/**/*", "api/**/*", "dolilo/**/*", "event/**/*", "exchange/**/*", "extlib/**/*", "form/**/*", "formtastic/**/*", "health_check/**/*", "japanese_converter/**/*", "job/**/*", "js_l10n/**/*", "l10n/**/*", "localization/**/*", "japanese_converter/**/*", "job/**/*", "js_l10n/**/*", "l10n/**/*", "localization/**/*", "resources_engine/**/*", "rewriter/**/*", "seo/**/*", "tasks/**/*", "version_control/**/*", "widget/**/*", "soft_delete/**/*"]
+let g:fuf_coveragefile_globPatterns = g:fuf_coveragefile_globPatterns + ['access/**/*', 'chats/**/*', 'configs/**/*', 'entries/**/*', 'files/**/*', 'groups/**/*', 'handlerrors/**/*', 'handlers/**/*', 'history/**/*', 'mails/**/*', 'mails_hub/**/*', 'members/**/*', 'migrations/**/*', 'notifications/**/*', 'organizations/**/*', 'pendingitems/**/*', 'presenter/**/*', 'qortexapihttpimpl/**/*', 'qortexdev/**/*', 'qortexprod/**/*', 'routes/**/*', 'scripts/**/*', 'services/**/*', 'stats/**/*', 'templates/**/*', 'tests/**/*', 'users/**/*', 'utils/**/*']
+let g:fuf_enumeratingLimit = 25
