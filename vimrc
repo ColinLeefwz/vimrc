@@ -124,31 +124,7 @@ endfunction
 nmap <silent> <leader>mw :call markwindowswap()<cr>
 map <silent> <leader>pw :call dowindowswap()<cr>
 map <C-x> :FufCoverageFile<CR>
-  1 set guifont=menlo:h13
-  2 set bsdir=buffer
-  3 set enc=utf-8
-  4 set fenc=utf-8
-  5 set fencs=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
-  6 let NERDTreeShowHidden=1
-  7 syntax on
-  8 set number
-  9 set hlsearch
- 10 set history=200
- 11 set tabstop=2
- 12 set tabstop=2
- 13 set softtabstop=2
- 14 set shiftwidth=2
- 15 set expandtab
- 16 set cindent shiftwidth=2
- 17 set autoindent shiftwidth=2
- 18 filetype plugin indent on
- 19 map <C-S> <C-C>:w<CR>
- 20 map <C-j> <C-W>j
- 21 map <C-k> <C-W>k
- 22 map <C-h> <C-W>h
- 23 map <C-l> <C-W>l
-~/.vimrc                                                                                                                                                                                  1,1            Top
-"~/.vimrc" 144L, 5488C
+
 let g:fuf_coveragefile_exclude = '\v\~$|\.(o|mp3|exe|dll|png|bak|orig|swp|swn|png|jpg|gif|swm|DS_Store)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|public/00_common_assets/*|system/qor_jobs/*'
 let g:fuf_coveragefile_globPatterns = ['*', 'lib/**/*', 'public/javascripts/**/*', 'public/stylesheets/**/*', 'public/js/**/*', 'public/css/**/*', '*.m']
 let g:fuf_coveragefile_globPatterns = g:fuf_coveragefile_globPatterns + ['*', 'app/**/*', 'config/**/*', 'db/**/*', 'test/**/*', 'addon/**/*', 'lib/**/*', 'products/**/*', 'routes/**/*', 'scenarios/**/*', 'home/**/*', 'sessions/**/*', 'templates/**/*', 'trades/**/*', 'home/**/*', 'admin/**/*', 'tests/**/*', 'handlers/**/*', 'categories/**/*']
@@ -157,13 +133,8 @@ let g:fuf_coveragefile_globPatterns = g:fuf_coveragefile_globPatterns + ['access
 let g:fuf_enumeratingLimit = 25
 
 au BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
-" インデント設定
 autocmd FileType coffee    setlocal sw=2 sts=2 ts=2 et
-" オートコンパイル
-  "保存と同時にコンパイルする
 autocmd BufWritePost *.coffee silent make!
-  "エラーがあったら別ウィンドウで表示
 autocmd QuickFixCmdPost * nested cwindow | redraw!
-" Ctrl-cで右ウィンドウにコンパイル結果を一時表示する
 nnoremap <silent> <C-C> :CoffeeCompile vert <CR><C-w>h
 let g:syntastic_ruby_checkers = ['rubocop']
